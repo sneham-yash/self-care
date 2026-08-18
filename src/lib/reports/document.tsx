@@ -73,10 +73,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: "#e5e5e5",
   },
+  details: {
+    paddingTop: 8,
+    paddingBottom: 4,
+  },
   detail: {
     fontSize: 9,
     color: "#555",
-    marginLeft: 8,
     marginBottom: 2,
   },
   item: {
@@ -153,13 +156,17 @@ export function CareReportDocument({ data }: { data: CareReportData }) {
                     {item.completedCount}/{item.scheduledCount} done
                   </Text>
                 </View>
-                {item.entries.map((entry) => (
-                  <ReportEntryLines
-                    key={entry.date}
-                    entry={entry}
-                    showDate={data.period !== "daily"}
-                  />
-                ))}
+                {item.entries.length > 0 ? (
+                  <View style={styles.details}>
+                    {item.entries.map((entry) => (
+                      <ReportEntryLines
+                        key={entry.date}
+                        entry={entry}
+                        showDate={data.period !== "daily"}
+                      />
+                    ))}
+                  </View>
+                ) : null}
               </View>
             ))}
           </View>
