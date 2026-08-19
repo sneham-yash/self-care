@@ -1,9 +1,3 @@
-import {
-  calculateCareScore,
-  CARE_SCORE_WEIGHTS,
-} from "@/lib/analytics/care-score";
-import { DOMAIN_LABELS } from "@/constants/care";
-
 export const ONBOARDING_STEP_COUNT = 3;
 
 export const ONBOARDING_STEPS = [
@@ -11,13 +5,13 @@ export const ONBOARDING_STEPS = [
     id: "checklist",
     title: "A ready-made checklist",
     description:
-      "Nourish starts with five self-care domains. Rate how well you did each item today and add an optional remark.",
+      "SUCHETA starts with five self-care areas. Rate each item and add an optional reflection note.",
     bullets: [
-      "Physical, Social, Emotional, Spiritual, and Professional items are ready on day one.",
-      "Tap 1, 2, or 3 stars to log how well you did each item. Tap the note icon to add a remark.",
-      "Hide items you don’t need under Settings → Manage items.",
+      "Body, Mind, People, Purpose, and Work items are ready on day one.",
+      "Tap ★, ★★, or ★★★ to rate how often you practice each item. Tap the note icon to add a reflection.",
+      "Hide items you don't need under Settings → Manage items.",
     ],
-    domains: Object.values(DOMAIN_LABELS),
+    domains: ["Body", "Mind", "People", "Purpose", "Work"],
   },
   {
     id: "custom",
@@ -32,13 +26,14 @@ export const ONBOARDING_STEPS = [
   },
   {
     id: "metrics",
-    title: "Your Care Score",
+    title: "Your Self-Care Score",
     description:
-      "Your Care Score (0–100) reflects how consistently you showed up across the five domains over the last 30 days.",
+      "One score — based on how often you practice self-care across each area.",
     bullets: [
-      "It blends domain averages, your current streak, and recent growth.",
-      "Visit Insights for trends, then download a daily, weekly, or monthly PDF.",
-      "See the full breakdown anytime under Settings → Tutorial.",
+      "Rate items ★ (Rarely), ★★ (Sometimes), or ★★★ (Often) to build your score.",
+      "Body, Mind, People, Purpose, and Work each contribute equally — 20% each.",
+      "Your streak and daily progress are shown as supporting context, not part of the score.",
+      "Improvement flags and notes never change your score. They are for reflection only.",
     ],
     previewScore: 72,
     previewMetrics: [
@@ -49,45 +44,6 @@ export const ONBOARDING_STEPS = [
   },
 ] as const;
 
-export const METRICS_GUIDE_WEIGHTS = [
-  {
-    key: "domainAverage",
-    label: "Domain average",
-    weight: CARE_SCORE_WEIGHTS.domainAverage,
-    normalization: "Average of the five domain completion rates",
-    colorClass: "bg-primary",
-  },
-  {
-    key: "currentStreak",
-    label: "Current Streak",
-    weight: CARE_SCORE_WEIGHTS.currentStreak,
-    normalization: "Streak ÷ 30 × 100, capped at 100",
-    colorClass: "bg-primary/80",
-  },
-  {
-    key: "growthTrend",
-    label: "Growth Trend",
-    weight: CARE_SCORE_WEIGHTS.growthTrend,
-    normalization: "50 + trend × 50 (trend is month-over-month change)",
-    colorClass: "bg-muted-foreground/40",
-  },
-] as const;
-
-export const METRICS_GUIDE_EXAMPLE = {
-  completionRate: 80,
-  currentStreak: 12,
-  physicalRate: 85,
-  socialRate: 70,
-  emotionalRate: 78,
-  spiritualRate: 65,
-  professionalRate: 72,
-  growthTrend: 0.05,
-} as const;
-
-export const METRICS_GUIDE_EXAMPLE_SCORE = calculateCareScore(
-  METRICS_GUIDE_EXAMPLE,
-);
-
 export const METRIC_DEFINITIONS = [
   {
     title: "Completion Rate",
@@ -96,28 +52,28 @@ export const METRIC_DEFINITIONS = [
     window: "Rolling 30 days",
   },
   {
-    title: "Physical",
-    description: "Completion rate for Physical self-care items.",
+    title: "Body",
+    description: "Completion rate for Body self-care items.",
     window: "Rolling 30 days",
   },
   {
-    title: "Social",
-    description: "Completion rate for Social self-care items.",
+    title: "People",
+    description: "Completion rate for People / social items.",
     window: "Rolling 30 days",
   },
   {
-    title: "Emotional",
-    description: "Completion rate for Psychological / emotional items.",
+    title: "Mind",
+    description: "Completion rate for Mind / emotional items.",
     window: "Rolling 30 days",
   },
   {
-    title: "Spiritual",
-    description: "Completion rate for Spiritual self-care items.",
+    title: "Purpose",
+    description: "Completion rate for Purpose / spiritual items.",
     window: "Rolling 30 days",
   },
   {
-    title: "Professional",
-    description: "Completion rate for Professional self-care items.",
+    title: "Work",
+    description: "Completion rate for Work / professional items.",
     window: "Rolling 30 days",
   },
   {
@@ -150,7 +106,7 @@ export const METRIC_DEFINITIONS = [
   {
     title: "Score Trend",
     description:
-      "Your Care Score recalculated each day using a rolling 30-day window.",
+      "Your care consistency trend recalculated each day using a rolling 30-day window.",
     window: "Daily rolling 30 days",
   },
 ] as const;

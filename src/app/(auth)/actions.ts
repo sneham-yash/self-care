@@ -17,6 +17,24 @@ async function getOrigin() {
   return host ? `${protocol}://${host}` : "http://localhost:3000";
 }
 
+function toAuthErrorMessage(error: unknown) {
+  if (
+    error instanceof Error &&
+    (error.message === "fetch failed" ||
+      (error.cause instanceof Error &&
+        "code" in error.cause &&
+        error.cause.code === "SELF_SIGNED_CERT_IN_CHAIN"))
+  ) {
+    return "Could not reach the auth service. Check your connection and try again.";
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Something went wrong. Please try again.";
+}
+
 export async function loginWithEmail(
   _prevState: AuthActionState,
   formData: FormData,
@@ -28,11 +46,18 @@ export async function loginWithEmail(
     return { error: "Email and password are required." };
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  try {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error) {
-    return { error: error.message };
+    if (error) {
+      return { error: error.message };
+    }
+  } catch (error) {
+    return { error: toAuthErrorMessage(error) };
   }
 
   redirect("/dashboard");
@@ -53,22 +78,29 @@ export async function signUpWithEmail(
     return { error: "Password must be at least 6 characters." };
   }
 
-  const supabase = await createClient();
   const origin = await getOrigin();
+  let hasSession = false;
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${origin}/auth/callback`,
-    },
-  });
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${origin}/auth/callback`,
+      },
+    });
 
-  if (error) {
-    return { error: error.message };
+    if (error) {
+      return { error: error.message };
+    }
+
+    hasSession = Boolean(data.session);
+  } catch (error) {
+    return { error: toAuthErrorMessage(error) };
   }
 
-  if (data.session) {
+  if (hasSession) {
     redirect("/dashboard");
   }
 

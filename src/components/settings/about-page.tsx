@@ -6,13 +6,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import { BrandMark } from "@/components/brand/brand-mark";
 import { CreatorCredit } from "@/components/brand/creator-credit";
 import { APP_NAME, APP_TAGLINE } from "@/constants/brand";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
@@ -36,20 +30,18 @@ export function AboutPage({ version }: AboutPageProps) {
 
       <div className="space-y-1">
         <h1 className={typography.screenTitle}>About {APP_NAME}</h1>
-        <p className={typography.screenSubtitle}>{APP_TAGLINE}</p>
+        <p className={typography.authTagline}>{APP_TAGLINE}</p>
       </div>
 
       <Card>
         <CardHeader className="items-center text-center">
           <BrandMark size="md" />
-          <CardTitle className="text-base">{APP_NAME}</CardTitle>
-          <CardDescription>{APP_TAGLINE}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-center">
           <p className={typography.bodyText}>Version {version}</p>
           <p className={typography.bodyMuted}>
-            A daily self-care checklist with remarks, a calendar, and reports
-            you can keep.
+            A calm personal space for self-care and reflection — with daily
+            check-ins, insights, and reports you can keep.
           </p>
         </CardContent>
       </Card>

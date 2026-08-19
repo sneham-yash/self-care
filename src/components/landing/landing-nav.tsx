@@ -20,7 +20,7 @@ export function LandingNav({ isAuthenticated }: LandingNavProps) {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
           <Link
             href="/"
-            className="shrink-0 opacity-90 transition-opacity hover:opacity-100"
+            className="shrink-0 opacity-95 transition-opacity hover:opacity-100"
             aria-label={`${APP_NAME} home`}
           >
             <BrandMark size="sm" />
@@ -43,7 +43,7 @@ export function LandingNav({ isAuthenticated }: LandingNavProps) {
                   <Link href="/login">Log in</Link>
                 </Button>
                 <Button size="sm" asChild>
-                  <Link href="/signup">Get Started</Link>
+                  <Link href="/signup">Begin Journey</Link>
                 </Button>
               </>
             )}

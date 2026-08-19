@@ -12,7 +12,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="border-border bg-background/95 fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden"
+      className="border-border/60 bg-background/90 fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur-md supports-[backdrop-filter]:bg-background/80 md:hidden"
       aria-label="Main navigation"
     >
       <div className="mx-auto flex max-w-lg items-stretch justify-around px-2 pb-[env(safe-area-inset-bottom)]">

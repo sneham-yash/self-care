@@ -9,23 +9,17 @@ import {
 } from "lucide-react";
 
 import { APP_NAME, APP_TAGLINE } from "@/constants/brand";
-import {
-  METRICS_GUIDE_EXAMPLE,
-  METRICS_GUIDE_EXAMPLE_SCORE,
-  METRICS_GUIDE_WEIGHTS,
-} from "@/components/tutorial/tutorial-content";
-
 export const LANDING_SEO_DESCRIPTION =
-  "Track daily self-care across physical, social, emotional, spiritual, and professional domains. Check in, add remarks, and download PDF reports.";
+  "SUCHETA — Bloom within. A calm personal space for daily self-care across Body, Mind, People, Purpose, and Work. Check in, reflect, and watch yourself grow.";
 
 export const LANDING_DASHBOARD_CTA = "Go to Dashboard";
 
 export const LANDING_HERO = {
   eyebrow: APP_TAGLINE,
-  headline: "Take care of yourself, one check at a time.",
+  headline: "Bloom within. One gentle act of care at a time.",
   subcopy:
-    "A ready-made self-care checklist, optional remarks, and a calendar that helps you notice patterns — without starting from a blank page.",
-  primaryCta: "Get Started",
+    "A calm, personal space for self-care and reflection — with a ready-made checklist, optional remarks, and a quiet view of how your care evolves.",
+  primaryCta: "Begin Your Journey",
   secondaryCta: "Log in",
 } as const;
 
@@ -40,7 +34,7 @@ export const LANDING_PHILOSOPHY = {
     {
       title: "Start with a checklist",
       description:
-        "Physical, social, emotional, spiritual, and professional items are ready the moment you sign in.",
+        "Body, Mind, People, Purpose, and Work — five areas of self-care ready the moment you sign in.",
     },
     {
       title: "Make it yours",
@@ -50,7 +44,7 @@ export const LANDING_PHILOSOPHY = {
     {
       title: "See the pattern",
       description:
-        "Week and month calendars, a Care Score, and downloadable reports keep the bigger picture in view.",
+        "Week and month calendars, a Self-Care Score, and downloadable reports keep the bigger picture in view.",
     },
   ],
 } as const;
@@ -78,13 +72,13 @@ export const LANDING_FEATURES: LandingFeature[] = [
     icon: Layers,
     title: "Five domains",
     description:
-      "Physical, Social, Emotional, Spiritual, and Professional — plus custom items you create.",
+      "Body, Mind, People, Purpose, and Work — plus custom practices you create.",
   },
   {
     icon: BarChart3,
-    title: "Care Score",
+    title: "Self-Care Score",
     description:
-      "A 0–100 score from domain averages, streak, and growth, with a 30-day trend.",
+      "A 0–100 score based on how often you practice each area of self-care, drawn from your ★ intensity ratings.",
   },
   {
     icon: Download,
@@ -101,27 +95,57 @@ export const LANDING_FEATURES: LandingFeature[] = [
 ];
 
 export const LANDING_METRICS = {
-  eyebrow: "Your Metrics",
-  headline: "Know how you’re caring for yourself.",
+  eyebrow: 'Your Metrics',
+  headline: "Know how you're caring for yourself.",
   subcopy:
-    "Your Care Score blends the five domain rates, your current streak, and recent growth into one number over a rolling 30-day window.",
-  demoScore: METRICS_GUIDE_EXAMPLE_SCORE,
-  demoMetrics: METRICS_GUIDE_EXAMPLE,
-  weights: METRICS_GUIDE_WEIGHTS,
+    "Your Self-Care Score reflects how often you currently practice each area of self-care — drawn from your ★ intensity ratings across Body, Mind, People, Purpose, and Work.",
+  demoScore: 72,
+  weights: [
+    {
+      key: "physical",
+      label: "Body",
+      weight: 0.2,
+      colorClass: "bg-[var(--category-body)]",
+    },
+    {
+      key: "emotional",
+      label: "Mind",
+      weight: 0.2,
+      colorClass: "bg-[var(--category-mind)]",
+    },
+    {
+      key: "social",
+      label: "People",
+      weight: 0.2,
+      colorClass: "bg-[var(--category-people)]",
+    },
+    {
+      key: "spiritual",
+      label: "Purpose",
+      weight: 0.2,
+      colorClass: "bg-[var(--category-purpose)]",
+    },
+    {
+      key: "professional",
+      label: "Work",
+      weight: 0.2,
+      colorClass: "bg-[var(--category-work)]",
+    },
+  ],
   supporting: [
     {
-      title: "Steps Forward",
-      description: "Every completed check-in counts toward a lifetime total.",
+      title: 'Steps Forward',
+      description: 'Every completed check-in counts toward a lifetime total.',
     },
     {
-      title: "Transformation",
+      title: 'Transformation',
       description:
-        "Month-over-month completion change. See whether you’re improving or need a gentler week.",
+        "Month-over-month completion change. See whether you're improving or need a gentler week.",
     },
     {
-      title: "Domain highlights",
+      title: 'Domain highlights',
       description:
-        "See which area of life is strongest and which deserves a little more attention.",
+        'See which area of life is strongest and which deserves a little more attention.',
     },
   ],
 } as const;
@@ -154,12 +178,8 @@ export const LANDING_BENEFITS = {
 } as const;
 
 export const LANDING_CTA = {
-  headline: "Your next check-in starts here.",
-  subcopy: "Show up for yourself today. The rest compounds.",
-  primaryCta: "Start Your Journey",
+  headline: "Your care journey starts here.",
+  subcopy: "Show up for yourself today. Growth is patient.",
+  primaryCta: "Begin Your Journey",
   secondaryCta: "Log in",
-} as const;
-
-export const LANDING_FOOTER = {
-  tagline: APP_TAGLINE,
 } as const;

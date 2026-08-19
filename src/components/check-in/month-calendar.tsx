@@ -109,7 +109,7 @@ export function MonthCalendar({
                   rate >= 70
                     ? isSelected
                       ? "bg-primary-foreground"
-                      : "bg-emerald-500"
+                      : "bg-success"
                     : rate > 0
                       ? isSelected
                         ? "bg-primary-foreground/70"

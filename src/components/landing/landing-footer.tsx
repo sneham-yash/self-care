@@ -1,19 +1,16 @@
 import Link from "next/link";
 
+import { BrandMark } from "@/components/brand/brand-mark";
 import { CreatorCredit } from "@/components/brand/creator-credit";
 import { LandingReveal } from "@/components/landing/landing-reveal";
-import { APP_NAME } from "@/constants/brand";
-import { LANDING_FOOTER } from "@/constants/landing";
-import { typography } from "@/lib/typography";
 
 export function LandingFooter() {
   return (
     <LandingReveal variant="fade-in">
       <footer className="border-border/40 border-t">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 sm:flex-row">
-          <div className="space-y-1 text-center sm:text-left">
-            <p className={typography.sectionTitle}>{APP_NAME}</p>
-            <p className={typography.bodyMuted}>{LANDING_FOOTER.tagline}</p>
+          <div className="flex justify-center sm:justify-start">
+            <BrandMark size="sm" />
           </div>
 
           <div className="flex items-center gap-6">

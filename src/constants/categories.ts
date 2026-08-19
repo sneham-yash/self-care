@@ -9,11 +9,11 @@ export type CategoryDefault = {
 };
 
 export const DEFAULT_DOMAINS: CategoryDefault[] = [
-  { name: "Physical", slug: "physical", icon: "heart-pulse", tone: "rose" },
-  { name: "Social", slug: "social", icon: "users", tone: "sky" },
-  { name: "Emotional", slug: "emotional", icon: "brain", tone: "violet" },
-  { name: "Spiritual", slug: "spiritual", icon: "leaf", tone: "emerald" },
-  { name: "Professional", slug: "professional", icon: "briefcase", tone: "amber" },
+  { name: "Body", slug: "physical", icon: "heart-pulse", tone: "sage" },
+  { name: "People", slug: "social", icon: "users", tone: "rose" },
+  { name: "Mind", slug: "emotional", icon: "brain", tone: "violet" },
+  { name: "Purpose", slug: "spiritual", icon: "leaf", tone: "emerald" },
+  { name: "Work", slug: "professional", icon: "briefcase", tone: "sky" },
 ];
 
 const categoryLookup = new Map<string, CategoryDefault>();
@@ -34,7 +34,7 @@ export function getCategoryVisuals(
   if (icon && icon.length > 0) {
     return {
       iconName: icon as IconName,
-      tone: match?.tone ?? "orange",
+      tone: match?.tone ?? "sage",
     };
   }
 
@@ -42,7 +42,7 @@ export function getCategoryVisuals(
     return { iconName: match.icon, tone: match.tone };
   }
 
-  return { iconName: "sparkles", tone: "orange" };
+  return { iconName: "sparkles", tone: "sage" };
 }
 
 export function slugifyCategoryName(name: string): string {

@@ -31,7 +31,7 @@ export function AppearancePage() {
       <div className="space-y-1">
         <h1 className={typography.screenTitle}>Appearance</h1>
         <p className={typography.screenSubtitle}>
-          Choose how Nourish looks on your device.
+          Choose how SUCHETA looks on your device.
         </p>
       </div>
 

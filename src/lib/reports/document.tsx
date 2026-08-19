@@ -41,16 +41,17 @@ const styles = StyleSheet.create({
     padding: 36,
     fontSize: 11,
     fontFamily: "Helvetica",
-    color: "#1f1f1f",
+    color: "#242522",
   },
   title: {
     fontSize: 20,
     fontFamily: "Helvetica-Bold",
     marginBottom: 4,
+    color: "#6B8E78",
   },
   subtitle: {
     fontSize: 12,
-    color: "#666",
+    color: "#73766F",
     marginBottom: 16,
   },
   metaRow: {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 18,
     padding: 10,
-    backgroundColor: "#fff7ed",
+    backgroundColor: "#F7F5F0",
   },
   domainTitle: {
     fontSize: 14,
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 4,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#E5E2DA",
   },
   details: {
     paddingTop: 8,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   },
   detail: {
     fontSize: 9,
-    color: "#555",
+    color: "#73766F",
     marginBottom: 2,
   },
   item: {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     left: 36,
     right: 36,
     fontSize: 9,
-    color: "#888",
+    color: "#9A9C95",
   },
 });
 
@@ -139,7 +140,7 @@ export function CareReportDocument({ data }: { data: CareReportData }) {
 
         <View style={styles.metaRow}>
           <Text>Prepared for {data.displayName}</Text>
-          <Text>Care Score {data.overallScore}</Text>
+          <Text>Completion Rate {data.overallScore}%</Text>
           <Text>Completion {data.overallRate}%</Text>
         </View>
 

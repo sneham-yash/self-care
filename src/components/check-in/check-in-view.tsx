@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { MonthCalendar } from "@/components/check-in/month-calendar";
 import { CareFilterTabs } from "@/components/dashboard/care-filter-tabs";
 import { TodayProgress } from "@/components/dashboard/today-progress";
-import { TodayCareList } from "@/components/dashboard/today-care-list";
+import { SelfCarePointList } from "@/components/dashboard/self-care-point-list";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { filterItemsByTab, getCareTabCounts } from "@/lib/care/filter";
@@ -74,15 +74,15 @@ export function CheckInView() {
       ) : null}
 
       {!isLoading && !itemsLoading && !error && !hasAnyItems ? (
-        <div className="rounded-xl border border-dashed p-8 text-center">
-          <p className={typography.bodyText}>No care items yet</p>
-          <p className={cn(typography.bodyMuted, "mt-1")}>
-            Add a custom item or wait for the default checklist to load.
+        <div className="rounded-2xl border border-dashed border-border/60 p-8 text-center space-y-3">
+          <p className={cn(typography.sectionTitle, "text-base")}>Your journey starts here</p>
+          <p className={cn(typography.bodyMuted, "text-sm")}>
+            Choose something you&apos;d like to nurture. Small acts of care make a difference.
           </p>
-          <Button className="mt-4" asChild>
+          <Button className="mt-2" asChild>
             <Link href="/create">
               <PlusIcon />
-              Create item
+              Add Practice
             </Link>
           </Button>
         </div>
@@ -90,7 +90,7 @@ export function CheckInView() {
 
       {hasAnyItems ? (
         <>
-          <Card className="border-primary/15 bg-gradient-to-br from-primary/[0.04] to-card gap-0 py-0">
+          <Card className="border-primary/15 bg-linear-to-br from-primary/4 to-card gap-0 py-0">
             <CardContent className="space-y-4 p-4 md:p-5">
               <MonthCalendar
                 selectedDate={selectedDate}
@@ -106,24 +106,25 @@ export function CheckInView() {
           </Card>
 
           <CareFilterTabs
+            variant="pills"
             value={homeTab}
             onChange={setHomeTab}
             counts={tabCounts}
           />
 
           {filteredItems.length === 0 ? (
-            <div className="rounded-xl border border-dashed p-8 text-center">
-              <p className={typography.bodyText}>Nothing in this view</p>
+            <div className="rounded-2xl border border-dashed border-border/60 p-6 text-center space-y-1">
+              <p className={cn(typography.sectionTitle, "text-base")}>Nothing here yet</p>
+              <p className={cn(typography.bodyMuted, "text-sm")}>No items in this area today.</p>
             </div>
           ) : (
-            <TodayCareList
+            <SelfCarePointList
               items={filteredItems}
               pendingItemId={pendingItemId}
               onSetIntensity={handleSetIntensity}
               onSaveRemark={(itemId, remark) =>
                 saveRemark.mutate({ itemId, remark })
               }
-              showSectionTitle={false}
             />
           )}
 

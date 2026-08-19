@@ -6,7 +6,6 @@ import { APP_NAME } from "@/constants/brand";
 import { careIntensityLabel, toCareIntensity } from "@/constants/care";
 import { fetchReportItems } from "@/lib/care-logs/api";
 import { isItemScheduled } from "@/lib/care/schedule";
-import { calculateCareScore } from "@/lib/analytics/care-score";
 import {
   CareReportDocument,
   type CareReportData,
@@ -122,24 +121,13 @@ export async function buildCareReportData(
       ? 0
       : Math.round((completedTotal / scheduledTotal) * 1000) / 10;
 
-  const overallScore = calculateCareScore({
-    completionRate: overallRate,
-    currentStreak: 0,
-    physicalRate: rate("physical"),
-    socialRate: rate("social"),
-    emotionalRate: rate("emotional"),
-    spiritualRate: rate("spiritual"),
-    professionalRate: rate("professional"),
-    growthTrend: 0,
-  });
-
   return {
     appName: APP_NAME,
     displayName,
     period,
     startDate,
     endDate,
-    overallScore,
+    overallScore: overallRate,
     overallRate,
     domains: [...grouped.values()],
   };
@@ -152,7 +140,7 @@ export async function downloadCareReportPdf(
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `nourish-${data.period}-${data.startDate}.pdf`;
+  link.download = `sucheta-${data.period}-${data.startDate}.pdf`;
   link.click();
   URL.revokeObjectURL(url);
 }

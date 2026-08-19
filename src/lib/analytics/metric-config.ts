@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 export type MetricKey =
+  | "selfCareScore"
   | "careScore"
   | "transformation"
   | "stepsForward"
@@ -45,6 +46,13 @@ export type MetricConfig = {
 };
 
 const METRIC_CONFIG: Record<MetricKey, MetricConfig> = {
+  selfCareScore: {
+    key: "selfCareScore",
+    label: "Self-Care Score",
+    shortLabel: "Score",
+    icon: LeafIcon,
+    tone: "primary",
+  },
   careScore: {
     key: "careScore",
     label: "Care Score",
@@ -88,35 +96,35 @@ const METRIC_CONFIG: Record<MetricKey, MetricConfig> = {
   },
   physicalScore: {
     key: "physicalScore",
-    label: "Physical",
-    shortLabel: "Physical",
+    label: "Body",
+    shortLabel: "Body",
     icon: HeartPulseIcon,
     tone: "positive",
   },
   socialScore: {
     key: "socialScore",
-    label: "Social",
-    shortLabel: "Social",
+    label: "People",
+    shortLabel: "People",
     icon: UsersIcon,
     tone: "neutral",
   },
   emotionalScore: {
     key: "emotionalScore",
-    label: "Emotional",
-    shortLabel: "Emotional",
+    label: "Mind",
+    shortLabel: "Mind",
     icon: BrainIcon,
     tone: "primary",
   },
   spiritualScore: {
     key: "spiritualScore",
-    label: "Spiritual",
-    shortLabel: "Spiritual",
+    label: "Purpose",
+    shortLabel: "Purpose",
     icon: LeafIcon,
     tone: "positive",
   },
   professionalScore: {
     key: "professionalScore",
-    label: "Professional",
+    label: "Work",
     shortLabel: "Work",
     icon: BriefcaseIcon,
     tone: "neutral",
@@ -181,9 +189,9 @@ export function getTransformationIcon(value: number): LucideIcon {
 export function getMetricToneClass(tone: MetricTone): string {
   switch (tone) {
     case "positive":
-      return "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400";
+      return "bg-success/10 text-success";
     case "attention":
-      return "bg-amber-500/10 text-amber-600 dark:text-amber-400";
+      return "bg-warning/10 text-warning";
     case "primary":
       return "bg-primary/10 text-primary";
     default:
@@ -192,7 +200,7 @@ export function getMetricToneClass(tone: MetricTone): string {
 }
 
 export function getTrendValueClass(value: number): string {
-  if (value > 0) return "text-emerald-600 dark:text-emerald-400";
+  if (value > 0) return "text-success";
   if (value < 0) return "text-muted-foreground";
   return "text-foreground";
 }

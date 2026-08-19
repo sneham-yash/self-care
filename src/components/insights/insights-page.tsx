@@ -4,7 +4,7 @@ import {
   CategoryInsightCard,
   MiniMetricTile,
 } from "@/components/metrics";
-import { CareScoreHero } from "@/components/metrics/care-score-hero";
+import { SelfCareScoreCard } from "@/components/dashboard/self-care-score-card";
 import { InsightsPageHeader } from "@/components/insights/insights-page-header";
 import { CareScoreTrendChart } from "@/components/insights/care-score-trend-chart";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useInsights } from "@/hooks/use-insights";
-import { formatTransformation } from "@/lib/analytics/care-score";
+import { useSelfCareScore } from "@/hooks/use-self-care-score";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -24,6 +24,7 @@ const METRICS_GUIDE_FROM_INSIGHTS = "/settings/metrics-guide?from=insights";
 
 export function InsightsPage() {
   const { data, isLoading, error } = useInsights();
+  const { data: scoreData } = useSelfCareScore();
 
   return (
     <div className="space-y-4">
@@ -44,8 +45,8 @@ export function InsightsPage() {
           <CardHeader className="text-center">
             <h2 className={typography.sectionTitle}>Insights coming soon</h2>
             <p className={cn(typography.bodyText, "leading-relaxed")}>
-              Keep checking in for a few days to unlock your Care Score and
-              domain highlights.
+              Keep checking in for a few days to unlock your Self-Care Score
+              and domain highlights.
             </p>
           </CardHeader>
           <CardContent className={cn(typography.bodyMuted, "text-center")}>
@@ -66,21 +67,20 @@ export function InsightsPage() {
               </Link>
             </Button>
           </div>
-          <div className="grid min-w-0 gap-4 lg:grid-cols-5">
-            <div className="min-w-0 space-y-4 lg:col-span-2">
-              <CareScoreHero
-                careScore={data.insights.careScore}
-                transformation={data.insights.transformation}
-                currentStreak={data.insights.currentStreak}
-                stepsForward={data.insights.stepsForward}
-                showTagline={false}
-              />
-            </div>
-            <div className="min-w-0 lg:col-span-3">
-              <CareScoreTrendChart data={data.scoreTrend} />
-            </div>
-          </div>
 
+          {/* Self-Care Score — the single headline number */}
+          {scoreData ? (
+            <SelfCareScoreCard
+              state={scoreData.state}
+              previousState={scoreData.previousState}
+              showDetails={false}
+            />
+          ) : null}
+
+          {/* Score trend chart (historical consistency shape) */}
+          <CareScoreTrendChart data={data.scoreTrend} />
+
+          {/* Completion rates by domain — supporting context */}
           <div className="grid min-w-0 grid-cols-2 gap-2 lg:grid-cols-5">
             <MiniMetricTile
               metricKey="physicalScore"

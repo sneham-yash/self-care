@@ -5,19 +5,21 @@ import { PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { CarePanel } from "@/components/dashboard/care-panel";
-import { CareHeroCard } from "@/components/dashboard/care-hero-card";
 import { HomeHeader } from "@/components/dashboard/home-header";
-import { TodayCareList } from "@/components/dashboard/today-care-list";
+import { SelfCarePointList } from "@/components/dashboard/self-care-point-list";
+import { SelfCareScoreCard } from "@/components/dashboard/self-care-score-card";
+import { TodayProgress } from "@/components/dashboard/today-progress";
 import { WeekCalendarStrip } from "@/components/dashboard/week-calendar-strip";
 import { Button } from "@/components/ui/button";
 import type { CareIntensityLevel } from "@/constants/care";
-import { calculateCareScore } from "@/lib/analytics/care-score";
 import { formatTodayLabel } from "@/lib/dates";
 import { filterItemsByTab, getCareTabCounts } from "@/lib/care/filter";
+import { formatStreakDays } from "@/lib/analytics/care-score";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import { useInsights } from "@/hooks/use-insights";
 import { useCareItems } from "@/hooks/use-care-items";
+import { useSelfCareScore, useSetWantsImprovement } from "@/hooks/use-self-care-score";
 import {
   useTodayCareItems,
   useSetCareIntensity,
@@ -37,6 +39,17 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
   const { data: allItems, isLoading: itemsLoading } = useCareItems();
   const { data: todayItems, isLoading, error } = useTodayCareItems(selectedDate);
   const { data: insightsData } = useInsights();
+  const { data: selfCareScoreData } = useSelfCareScore();
+  const setWantsImprovement = useSetWantsImprovement();
+
+  const flagsByItemId = useMemo(() => {
+    const map = new Map<string, boolean>();
+    selfCareScoreData?.points.forEach((p) => {
+      map.set(p.id, p.wantsImprovement);
+    });
+    return map;
+  }, [selfCareScoreData]);
+
   const setIntensity = useSetCareIntensity(selectedDate);
   const saveRemark = useUpsertCareRemark(selectedDate);
   const [pendingItemId, setPendingItemId] = useState<string>();
@@ -53,24 +66,8 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
   const hasAnyItems = (allItems?.length ?? 0) > 0;
   const tabCounts = useMemo(() => getCareTabCounts(allToday), [allToday]);
 
-  const todayCareScore = useMemo(() => {
-    if (insightsData?.insights) return insightsData.insights.careScore;
-    const rate =
-      allToday.length === 0
-        ? 0
-        : (allToday.filter((item) => item.completed).length / allToday.length) *
-          100;
-    return calculateCareScore({
-      completionRate: rate,
-      currentStreak: 0,
-      physicalRate: rate,
-      socialRate: rate,
-      emotionalRate: rate,
-      spiritualRate: rate,
-      professionalRate: rate,
-      growthTrend: 0,
-    });
-  }, [allToday, insightsData]);
+  const currentStreak = insightsData?.insights.currentStreak ?? 0;
+  const stepsForward = insightsData?.insights.stepsForward ?? 0;
 
   async function handleSetIntensity(
     itemId: string,
@@ -84,18 +81,6 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
     }
   }
 
-  const heroCard =
-    hasAnyItems && !isLoading && !itemsLoading && !error ? (
-      <CareHeroCard
-        careScore={todayCareScore}
-        transformation={insightsData?.insights.transformation ?? 0}
-        currentStreak={insightsData?.insights.currentStreak ?? 0}
-        stepsForward={insightsData?.insights.stepsForward ?? 0}
-        completedCount={allCompletedCount}
-        totalCount={allTotalCount}
-      />
-    ) : null;
-
   const calendarStrip = (
     <WeekCalendarStrip
       selectedDate={selectedDate}
@@ -105,16 +90,16 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
 
   const emptyState =
     !isLoading && !itemsLoading && !error && !hasAnyItems ? (
-      <div className="rounded-xl border border-dashed p-8 text-center">
-        <p className={typography.bodyText}>Your checklist is ready</p>
-        <p className={cn(typography.bodyMuted, "mt-1")}>
-          Default self-care items should appear after you sign in. Add your own
-          anytime.
+      <div className="rounded-2xl border border-dashed border-border/60 p-8 text-center space-y-3">
+        <p className={cn(typography.sectionTitle, "text-base")}>Your journey starts here</p>
+        <p className={cn(typography.bodyMuted, "text-sm")}>
+          Choose something you&apos;d like to nurture. Small, consistent acts of care
+          add up over time.
         </p>
-        <Button className="mt-4" asChild>
+        <Button className="mt-2" asChild>
           <Link href="/create">
             <PlusIcon />
-            Create item
+            Add Practice
           </Link>
         </Button>
       </div>
@@ -126,30 +111,32 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
     !error &&
     hasAnyItems &&
     filteredCount === 0 ? (
-      <div className="rounded-xl border border-dashed p-6 text-center">
-        <p className={typography.bodyText}>Nothing in this view today</p>
-        <p className={cn(typography.bodyMuted, "mt-1")}>
-          No items scheduled for this domain today.
+      <div className="rounded-2xl border border-dashed border-border/60 p-6 text-center space-y-1">
+        <p className={cn(typography.sectionTitle, "text-base")}>Nothing here yet</p>
+        <p className={cn(typography.bodyMuted, "text-sm")}>
+          No items in this area today. Every beginning is a seed.
         </p>
       </div>
     ) : null;
 
   const itemList =
     !isLoading && !itemsLoading && !error && filteredCount > 0 ? (
-      <TodayCareList
+      <SelfCarePointList
         items={filteredItems}
         pendingItemId={pendingItemId}
+        flagsByItemId={flagsByItemId}
         onSetIntensity={handleSetIntensity}
         onSaveRemark={(itemId, remark) =>
           saveRemark.mutate({ itemId, remark })
         }
-        layout="compact"
-        showSectionTitle={false}
+        onToggleImprovement={(itemId, current) =>
+          setWantsImprovement.mutate({ itemId, wantsImprovement: !current })
+        }
       />
     ) : null;
 
   return (
-    <div className="min-w-0 space-y-4 md:space-y-0">
+    <div className="min-w-0 space-y-4">
       <HomeHeader
         displayName={displayName}
         dateLabel={formatTodayLabel(selectedDate)}
@@ -170,13 +157,32 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
 
       {emptyState}
 
+      {/* Self-Care Score card — full width, the single headline number */}
+      {hasAnyItems && !isLoading && !itemsLoading && !error && selfCareScoreData ? (
+        <SelfCareScoreCard
+          state={selfCareScoreData.state}
+          previousState={selfCareScoreData.previousState}
+        />
+      ) : null}
+
       {hasAnyItems && !isLoading && !itemsLoading && !error ? (
         <div className="grid min-w-0 gap-4 md:grid-cols-12 md:items-start md:gap-5 lg:gap-6">
-          <div className="min-w-0 space-y-4 md:col-span-5 lg:col-span-4">
-            {heroCard}
+          {/* Left column: today's progress + streak + calendar (mobile) */}
+          <div className="min-w-0 space-y-3 md:col-span-5 lg:col-span-4">
+            <TodayProgress
+              completedCount={allCompletedCount}
+              totalCount={allTotalCount}
+            />
+            {currentStreak > 0 ? (
+              <p className="text-xs text-muted-foreground">
+                {formatStreakDays(currentStreak)} streak
+                {stepsForward > 0 ? ` · ${stepsForward} steps forward` : ""}
+              </p>
+            ) : null}
             <div className="md:hidden">{calendarStrip}</div>
           </div>
 
+          {/* Right column: calendar (desktop) + filters + item list */}
           <div className="min-w-0 space-y-4 md:col-span-7 lg:col-span-8">
             <div className="hidden md:block">{calendarStrip}</div>
             <CarePanel
@@ -185,6 +191,8 @@ export function DashboardPage({ displayName }: DashboardPageProps) {
               tabCounts={tabCounts}
             >
               {filterEmptyState}
+              {/* Anchor for "Start Assessment" CTA */}
+              <div id="self-care-points" />
               {itemList}
             </CarePanel>
           </div>

@@ -47,7 +47,7 @@ export const settingsNavItems = [
   },
   {
     href: "/settings/about",
-    label: "About Nourish",
+    label: "About SUCHETA",
     description: "App info and version",
     icon: InfoIcon,
   },

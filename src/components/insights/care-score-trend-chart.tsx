@@ -74,10 +74,10 @@ export function CareScoreTrendChart({ data }: CareScoreTrendChartProps) {
       <CardHeader className="gap-1 px-4 pb-0">
         <div className="flex items-center gap-2">
           <MetricIconBadge icon={LineChartIcon} tone="neutral" size="sm" />
-          <p className={typography.metricLabel}>Care Score Trend</p>
+          <p className={typography.metricLabel}>Consistency Trend</p>
         </div>
         <p className={cn(typography.bodyMuted, "text-sm")}>
-          Rolling 30-day score over time
+          Rolling 30-day completion trend
         </p>
       </CardHeader>
       <CardContent className="px-4 pt-0">

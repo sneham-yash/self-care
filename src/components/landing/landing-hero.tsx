@@ -1,13 +1,12 @@
 import Link from "next/link";
 
-import { CareScoreHero } from "@/components/metrics";
 import { LandingReveal } from "@/components/landing/landing-reveal";
+import { LandingScorePreview } from "@/components/landing/landing-score-preview";
 import { LandingSection } from "@/components/landing/landing-section";
 import { Button } from "@/components/ui/button";
 import {
   LANDING_DASHBOARD_CTA,
   LANDING_HERO,
-  LANDING_METRICS,
 } from "@/constants/landing";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
@@ -17,14 +16,14 @@ type LandingHeroProps = {
 };
 
 export function LandingHero({ isAuthenticated }: LandingHeroProps) {
-  const { demoScore, demoMetrics } = LANDING_METRICS;
-
   return (
     <LandingSection className="flex min-h-[calc(100svh-4rem)] items-center py-16 md:py-24">
       <div className="grid w-full items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="space-y-8">
           <LandingReveal immediate variant="fade-up" delay={0}>
-            <p className={typography.landingEyebrow}>{LANDING_HERO.eyebrow}</p>
+            <p className={cn(typography.authTagline, "text-primary")}>
+              {LANDING_HERO.eyebrow}
+            </p>
           </LandingReveal>
 
           <LandingReveal immediate variant="fade-up" delay={80}>
@@ -65,13 +64,7 @@ export function LandingHero({ isAuthenticated }: LandingHeroProps) {
           delay={320}
           className="mx-auto w-full max-w-md lg:max-w-none"
         >
-          <CareScoreHero
-            careScore={demoScore}
-            transformation={demoMetrics.growthTrend}
-            currentStreak={demoMetrics.currentStreak}
-            stepsForward={247}
-            className="border-primary/15 rounded-2xl shadow-lg"
-          />
+          <LandingScorePreview className="shadow-lg" />
         </LandingReveal>
       </div>
     </LandingSection>

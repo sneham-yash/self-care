@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useInsights } from "@/hooks/use-insights";
+import { useSelfCareScore } from "@/hooks/use-self-care-score";
 import { formatDisplayName, typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,7 @@ export function ProfilePage({
   memberSince,
 }: ProfilePageProps) {
   const { data: insightsData } = useInsights();
+  const { data: scoreData } = useSelfCareScore();
   const [editOpen, setEditOpen] = useState(false);
   const nameLabel = displayName
     ? formatDisplayName(displayName)
@@ -73,7 +75,7 @@ export function ProfilePage({
         </div>
       </div>
 
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-background gap-3 py-4">
+      <Card className="border-primary/20 bg-linear-to-br from-primary/5 via-background to-background gap-3 py-4">
         <CardHeader className="px-4 pb-0">
           <CardTitle className="text-base">Your stats</CardTitle>
           <CardDescription>Recent performance over the last 30 days</CardDescription>
@@ -81,8 +83,12 @@ export function ProfilePage({
         <CardContent className="px-4">
           <div className="grid grid-cols-3 gap-2">
             <MiniMetricTile
-              metricKey="careScore"
-              value={insightsData?.insights.careScore ?? 0}
+              metricKey="selfCareScore"
+              value={
+                scoreData?.state.overallScore !== null && scoreData?.state.overallScore !== undefined
+                  ? `${Math.round(scoreData.state.overallScore)}%`
+                  : "—"
+              }
               align="center"
             />
             <MiniMetricTile

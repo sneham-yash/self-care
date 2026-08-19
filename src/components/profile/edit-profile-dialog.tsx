@@ -54,7 +54,7 @@ export function EditProfileDialog({
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
           <DialogDescription>
-            Update how your name appears across Nourish.
+            Update how your name appears across SUCHETA.
           </DialogDescription>
         </DialogHeader>
 

@@ -27,7 +27,7 @@ export function LoginForm({ errorMessage }: { errorMessage?: string }) {
       variant="login"
       footer={
         <p className={typography.bodyMuted}>
-          New to Nourish?{" "}
+          New to SUCHETA?{" "}
           <Link
             href="/signup"
             className="text-primary font-medium underline-offset-4 hover:underline"

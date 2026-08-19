@@ -8,7 +8,7 @@ export const typography = {
     "mx-auto w-full min-w-0 max-w-lg md:max-w-4xl lg:max-w-6xl xl:max-w-7xl",
   sectionTitle: "font-display text-lg font-semibold tracking-tight",
   metricLabel:
-    "font-display text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground",
+    "font-display text-[11px] font-medium tracking-wide text-muted-foreground",
   metricValue:
     "font-display text-4xl font-bold tracking-tight text-foreground",
   metricValueSm: "font-display text-2xl font-bold tracking-tight",
@@ -23,7 +23,9 @@ export const typography = {
   authHeadline:
     "font-display text-[1.625rem] font-semibold tracking-tight leading-tight text-foreground",
   authTagline:
-    "font-display text-sm font-medium tracking-wide text-primary",
+    "font-sans italic text-sm font-normal tracking-wide text-muted-foreground",
+  brandTagline:
+    "font-sans italic font-normal tracking-wide text-muted-foreground",
   landingHeadline:
     "font-display text-4xl font-semibold tracking-tight leading-[1.1] text-foreground md:text-5xl lg:text-6xl",
   landingSectionTitle:
@@ -31,7 +33,7 @@ export const typography = {
   landingLead:
     "font-sans text-lg leading-relaxed text-muted-foreground md:text-xl",
   landingEyebrow:
-    "font-display text-xs font-medium uppercase tracking-[0.2em] text-primary",
+    "font-display text-xs font-medium tracking-widest text-primary",
 } as const;
 
 export function formatDisplayName(name: string): string {

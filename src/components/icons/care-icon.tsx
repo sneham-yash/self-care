@@ -38,7 +38,7 @@ export function CareIcon({
     iconName = resolveIconName(icon);
   }
 
-  const tone = ICON_TONE_CLASSES[ICON_REGISTRY[iconName]?.tone ?? "orange"];
+  const tone = ICON_TONE_CLASSES[ICON_REGISTRY[iconName]?.tone ?? "sage"];
   const LucideIcon = getLucideIcon(iconName);
 
   return (

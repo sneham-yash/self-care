@@ -52,7 +52,7 @@ export type IconName =
   | "zap";
 
 export type IconTone =
-  | "orange"
+  | "sage"
   | "rose"
   | "emerald"
   | "sky"
@@ -65,27 +65,27 @@ export const ICON_REGISTRY: Record<
   { icon: LucideIcon; label: string; tone: IconTone }
 > = {
   apple: { icon: Apple, label: "Food", tone: "emerald" },
-  "book-open": { icon: BookOpen, label: "Book", tone: "orange" },
+  "book-open": { icon: BookOpen, label: "Book", tone: "sage" },
   brain: { icon: Brain, label: "Mind", tone: "violet" },
   briefcase: { icon: Briefcase, label: "Work", tone: "sky" },
   coffee: { icon: Coffee, label: "Coffee", tone: "amber" },
-  dumbbell: { icon: Dumbbell, label: "Fitness", tone: "rose" },
-  flame: { icon: Flame, label: "Energy", tone: "orange" },
+  dumbbell: { icon: Dumbbell, label: "Fitness", tone: "sage" },
+  flame: { icon: Flame, label: "Energy", tone: "amber" },
   "graduation-cap": { icon: GraduationCap, label: "Learning", tone: "sky" },
   handshake: { icon: Handshake, label: "Support", tone: "amber" },
   heart: { icon: Heart, label: "Heart", tone: "rose" },
-  "heart-pulse": { icon: HeartPulse, label: "Health", tone: "rose" },
+  "heart-pulse": { icon: HeartPulse, label: "Health", tone: "sage" },
   leaf: { icon: Leaf, label: "Mindfulness", tone: "emerald" },
   "message-circle": { icon: MessageCircle, label: "Talk", tone: "sky" },
   moon: { icon: Moon, label: "Rest", tone: "violet" },
   palette: { icon: Palette, label: "Art", tone: "violet" },
-  pencil: { icon: Pencil, label: "Journal", tone: "orange" },
+  pencil: { icon: Pencil, label: "Journal", tone: "sage" },
   scale: { icon: Scale, label: "Balance", tone: "sky" },
   smartphone: { icon: Smartphone, label: "Phone", tone: "slate" },
-  sparkles: { icon: Sparkles, label: "Growth", tone: "orange" },
-  target: { icon: Target, label: "Goal", tone: "orange" },
+  sparkles: { icon: Sparkles, label: "Growth", tone: "sage" },
+  target: { icon: Target, label: "Goal", tone: "sage" },
   trees: { icon: Trees, label: "Nature", tone: "emerald" },
-  users: { icon: Users, label: "People", tone: "sky" },
+  users: { icon: Users, label: "People", tone: "rose" },
   zap: { icon: Zap, label: "Energy", tone: "sky" },
 };
 
@@ -102,29 +102,29 @@ export const ICON_TONE_CLASSES: Record<
   IconTone,
   { bg: string; text: string }
 > = {
-  orange: {
-    bg: "bg-orange-100 dark:bg-orange-950/50",
-    text: "text-orange-600 dark:text-orange-400",
+  sage: {
+    bg: "bg-[color-mix(in_srgb,var(--category-body)_12%,white)] dark:bg-[color-mix(in_srgb,var(--category-body)_20%,black)]",
+    text: "text-[var(--category-body)]",
   },
   rose: {
-    bg: "bg-rose-100 dark:bg-rose-950/50",
-    text: "text-rose-600 dark:text-rose-400",
+    bg: "bg-[color-mix(in_srgb,var(--category-people)_12%,white)] dark:bg-[color-mix(in_srgb,var(--category-people)_20%,black)]",
+    text: "text-[var(--category-people)]",
   },
   emerald: {
     bg: "bg-emerald-100 dark:bg-emerald-950/50",
     text: "text-emerald-600 dark:text-emerald-400",
   },
   sky: {
-    bg: "bg-sky-100 dark:bg-sky-950/50",
-    text: "text-sky-600 dark:text-sky-400",
+    bg: "bg-[color-mix(in_srgb,var(--category-work)_12%,white)] dark:bg-[color-mix(in_srgb,var(--category-work)_20%,black)]",
+    text: "text-[var(--category-work)]",
   },
   violet: {
-    bg: "bg-violet-100 dark:bg-violet-950/50",
-    text: "text-violet-600 dark:text-violet-400",
+    bg: "bg-[color-mix(in_srgb,var(--category-mind)_12%,white)] dark:bg-[color-mix(in_srgb,var(--category-mind)_20%,black)]",
+    text: "text-[var(--category-mind)]",
   },
   amber: {
-    bg: "bg-amber-100 dark:bg-amber-950/50",
-    text: "text-amber-600 dark:text-amber-400",
+    bg: "bg-[color-mix(in_srgb,var(--category-purpose)_12%,white)] dark:bg-[color-mix(in_srgb,var(--category-purpose)_20%,black)]",
+    text: "text-[var(--category-purpose)]",
   },
   slate: {
     bg: "bg-slate-100 dark:bg-slate-800/60",

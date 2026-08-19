@@ -30,9 +30,9 @@ export function LandingMetrics() {
                 <div className="flex items-center gap-4">
                   <ScoreRing score={demoScore} size="lg" />
                   <div>
-                    <p className={typography.metricLabel}>Care Score</p>
-                    <p className={typography.metricValue}>{demoScore}</p>
-                    <p className={typography.bodyMuted}>Rolling 30 days</p>
+                    <p className={typography.metricLabel}>Self-Care Score</p>
+                    <p className={typography.metricValue}>{demoScore}%</p>
+                    <p className={typography.bodyMuted}>Equal areas of care</p>
                   </div>
                 </div>
 

@@ -1,7 +1,7 @@
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
-type ScoreRingSize = "sm" | "md" | "lg";
+type ScoreRingSize = "sm" | "md" | "lg" | "xl";
 
 const SIZE_CONFIG: Record<
   ScoreRingSize,
@@ -28,22 +28,47 @@ const SIZE_CONFIG: Record<
     strokeWidth: 6,
     valueClass: typography.metricValue,
   },
+  xl: {
+    container: "size-32",
+    viewBox: "0 0 112 112",
+    radius: 44,
+    strokeWidth: 7,
+    valueClass: typography.metricValue + " text-3xl",
+  },
 };
 
+/**
+ * The score ring always uses the sage primary color.
+ * Pass a custom `colorClass` (e.g. "text-[var(--category-mind)]") for category-specific rings.
+ */
 type ScoreRingProps = {
-  score: number;
+  score: number | null;
   size?: ScoreRingSize;
+  /** Tailwind color class for the ring fill — defaults to text-primary (sage) */
+  colorClass?: string;
   className?: string;
+  "aria-label"?: string;
 };
 
-export function ScoreRing({ score, size = "lg", className }: ScoreRingProps) {
+export function ScoreRing({
+  score,
+  size = "lg",
+  colorClass = "text-primary",
+  className,
+  "aria-label": ariaLabel,
+}: ScoreRingProps) {
   const config = SIZE_CONFIG[size];
   const center = parseInt(config.viewBox.split(" ")[2] ?? "80", 10) / 2;
   const circumference = 2 * Math.PI * config.radius;
-  const offset = circumference - (score / 100) * circumference;
+  const effectiveScore = score ?? 0;
+  const offset = circumference - (effectiveScore / 100) * circumference;
 
   return (
-    <div className={cn("relative shrink-0", config.container, className)}>
+    <div
+      className={cn("relative shrink-0", config.container, className)}
+      role="img"
+      aria-label={ariaLabel}
+    >
       <svg
         className={cn(config.container, "-rotate-90")}
         viewBox={config.viewBox}
@@ -68,11 +93,13 @@ export function ScoreRing({ score, size = "lg", className }: ScoreRingProps) {
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className="text-primary transition-all duration-500"
+          className={cn(colorClass, "transition-all duration-500")}
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={config.valueClass}>{score}</span>
+        {score !== null ? (
+          <span className={config.valueClass}>{Math.round(score)}</span>
+        ) : null}
       </div>
     </div>
   );

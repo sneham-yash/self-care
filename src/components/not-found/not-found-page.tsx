@@ -4,7 +4,7 @@ import { AuthBackgroundArt } from "@/components/auth/auth-background-art";
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ThemeModePicker } from "@/components/theme/theme-mode-picker";
 import { Button } from "@/components/ui/button";
-import { APP_NAME, APP_TAGLINE } from "@/constants/brand";
+import { APP_NAME } from "@/constants/brand";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
@@ -24,13 +24,14 @@ export function NotFoundPage({ isAuthenticated }: NotFoundPageProps) {
           "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-500",
         )}
       >
-        <header className="space-y-3">
-          <div className="flex justify-center opacity-90">
-            <Link href="/" aria-label={`${APP_NAME} home`}>
-              <BrandMark size="sm" />
-            </Link>
-          </div>
-          <p className={typography.authTagline}>{APP_TAGLINE}</p>
+        <header className="flex justify-center">
+          <Link
+            href="/"
+            className="opacity-95 transition-opacity hover:opacity-100"
+            aria-label={`${APP_NAME} home`}
+          >
+            <BrandMark size="md" />
+          </Link>
         </header>
 
         <div className="space-y-3">

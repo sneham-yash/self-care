@@ -11,7 +11,7 @@ export function SideRailNav() {
 
   return (
     <nav
-      className="border-border/60 bg-card/80 fixed inset-y-0 left-0 z-50 hidden w-16 flex-col items-center border-r py-4 shadow-sm backdrop-blur-md md:flex lg:hidden"
+      className="border-border bg-card/90 fixed inset-y-0 left-0 z-50 hidden w-16 flex-col items-center border-r py-4 backdrop-blur-md shadow-[2px_0_20px_var(--shadow)] md:flex lg:hidden"
       aria-label="Main navigation"
     >
       <div className="flex flex-1 flex-col items-center gap-1 px-2">

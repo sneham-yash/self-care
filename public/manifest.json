@@ -1,11 +1,11 @@
 {
-  "name": "Nourish",
-  "short_name": "Nourish",
-  "description": "Care, one check at a time.",
+  "name": "SUCHETA",
+  "short_name": "SUCHETA",
+  "description": "Bloom within",
   "start_url": "/dashboard",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#f97316",
+  "background_color": "#F7F5F0",
+  "theme_color": "#6B8E78",
   "orientation": "portrait-primary",
   "icons": [
     {

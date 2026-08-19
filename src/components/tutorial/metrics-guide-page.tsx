@@ -6,16 +6,11 @@ import { ArrowLeftIcon } from "lucide-react";
 
 import {
   MetricDefinitionCard,
-  MiniMetricTile,
   ScoreRing,
 } from "@/components/metrics";
-import { WeightBarIllustration } from "@/components/tutorial/tutorial-illustrations";
 import {
   INSIGHTS_READINESS_NOTE,
   METRIC_DEFINITIONS,
-  METRICS_GUIDE_EXAMPLE,
-  METRICS_GUIDE_EXAMPLE_SCORE,
-  METRICS_GUIDE_WEIGHTS,
 } from "@/components/tutorial/tutorial-content";
 import { METRIC_DEFINITION_KEYS } from "@/lib/analytics/metric-config";
 import {
@@ -37,31 +32,6 @@ export function MetricsGuidePage() {
   const backLink =
     from === "insights" ? BACK_LINKS.insights : BACK_LINKS.tutorial;
 
-  const exampleBreakdown = METRICS_GUIDE_WEIGHTS.map((item) => {
-    let normalized = 0;
-    if (item.key === "domainAverage") {
-      normalized =
-        (METRICS_GUIDE_EXAMPLE.physicalRate +
-          METRICS_GUIDE_EXAMPLE.socialRate +
-          METRICS_GUIDE_EXAMPLE.emotionalRate +
-          METRICS_GUIDE_EXAMPLE.spiritualRate +
-          METRICS_GUIDE_EXAMPLE.professionalRate) /
-        5;
-    } else if (item.key === "currentStreak") {
-      normalized = Math.min(100, (METRICS_GUIDE_EXAMPLE.currentStreak / 30) * 100);
-    } else if (item.key === "growthTrend") {
-      normalized = Math.min(100, Math.max(0, 50 + METRICS_GUIDE_EXAMPLE.growthTrend * 50));
-    }
-
-    const contribution = Math.round(normalized * item.weight * 10) / 10;
-
-    return {
-      ...item,
-      normalized: Math.round(normalized),
-      contribution,
-    };
-  });
-
   return (
     <div className="space-y-4">
       <Link
@@ -78,99 +48,106 @@ export function MetricsGuidePage() {
       <div className="space-y-1">
         <h1 className={typography.screenTitle}>How Metrics Work</h1>
         <p className={typography.screenSubtitle}>
-          Care Score and your Insights explained
+          Self-Care Score and Care Consistency explained
         </p>
       </div>
 
-      <Card className="gap-3 py-4">
+      {/* ── Self-Care Score ─────────────────────────────────────────── */}
+      <Card className="gap-3 border-primary/15 bg-linear-to-br from-primary/4 via-card to-card py-4">
         <CardHeader className="px-4 pb-0">
-          <p className={typography.sectionTitle}>Care Score formula</p>
+          <p className={cn(typography.sectionTitle, "text-primary")}>
+            Self-Care Score
+          </p>
           <p className={cn(typography.bodyMuted, "text-sm leading-relaxed")}>
-            Your Care Score is a weighted blend of domain averages, streak, and
-            growth from the last 30 days, normalized to a 0–100 scale.
+            Your Self-Care Score reflects how often you currently practice
+            different areas of self-care — based on your ★ intensity ratings,
+            not on daily completion streaks.
           </p>
         </CardHeader>
-        <CardContent className="space-y-4 px-4">
-          <WeightBarIllustration
-            segments={METRICS_GUIDE_WEIGHTS.map((item) => ({
-              label: item.label,
-              weight: item.weight,
-              colorClass: item.colorClass,
-            }))}
-          />
-          <div className="space-y-2">
-            {METRICS_GUIDE_WEIGHTS.map((item) => (
-              <p key={item.key} className={cn(typography.bodyMuted, "text-xs")}>
-                <span className="text-foreground font-medium">
-                  {item.label}:
-                </span>{" "}
-                {item.normalization}
-              </p>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="gap-3 py-4">
-        <CardHeader className="px-4 pb-0">
-          <p className={typography.sectionTitle}>Worked Example</p>
-          <p className={cn(typography.bodyMuted, "text-sm")}>
-            Sample inputs and how they combine into a score.
-          </p>
-        </CardHeader>
-        <CardContent className="space-y-4 px-4">
-          <div className="grid grid-cols-2 gap-2">
-            <MiniMetricTile
-              metricKey="completionRate"
-              value="80%"
-              align="left"
-            />
-            <MiniMetricTile
-              metricKey="currentStreak"
-              value="12 days"
-              align="left"
-            />
-            <MiniMetricTile
-              metricKey="physicalScore"
-              value="85%"
-              align="left"
-            />
-            <MiniMetricTile
-              metricKey="socialScore"
-              value="70%"
-              align="left"
-            />
-            <MiniMetricTile
-              metricKey="growthTrend"
-              value="+5%"
-              trendValue={0.05}
-              align="left"
-              className="col-span-2"
-            />
+        <CardContent className="space-y-3 px-4">
+          <div className="rounded-xl border border-primary/15 bg-primary/4 p-3 space-y-1.5">
+            <p className={cn(typography.bodyMuted, "text-xs font-medium text-foreground")}>
+              Formula
+            </p>
+            <p className={cn(typography.bodyMuted, "text-xs leading-relaxed")}>
+              Each item you rate contributes its intensity (1–3) to its area
+              average. That average is divided by 3 and multiplied by 100 to
+              give a percentage. Items you haven&apos;t rated yet are excluded —
+              not treated as zero.
+            </p>
+            <div className="mt-2 grid grid-cols-3 gap-1.5">
+              {(
+                [
+                  { stars: "★", label: "Rarely", val: "1" },
+                  { stars: "★★", label: "Sometimes", val: "2" },
+                  { stars: "★★★", label: "Often", val: "3" },
+                ] as const
+              ).map(({ stars, label, val }) => (
+                <div
+                  key={label}
+                  className="rounded-lg bg-card border border-border/60 px-2 py-1.5 text-center"
+                >
+                  <p className="font-medium text-xs text-primary">
+                    {stars}
+                  </p>
+                  <p className="text-[10px] text-muted-foreground">{label} = {val}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="divide-border divide-y rounded-lg border">
-            {exampleBreakdown.map((item) => (
-              <div
-                key={item.key}
-                className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
-              >
-                <span className={typography.bodyText}>
-                  {item.label} ({item.normalized} × {Math.round(item.weight * 100)}%)
-                </span>
-                <span className={typography.bodyMuted}>+{item.contribution}</span>
-              </div>
-            ))}
+          <div className="space-y-1.5">
+            <p className={cn(typography.bodyMuted, "text-xs font-medium text-foreground")}>
+              Equal area weighting
+            </p>
+            <p className={cn(typography.bodyMuted, "text-xs leading-relaxed")}>
+              Body, Mind, People, Purpose, and Work each contribute 20% to your
+              overall score — regardless of how many items each area contains.
+              Areas with no ratings yet are excluded from the overall average.
+            </p>
+            <div className="grid grid-cols-5 gap-1 mt-2">
+              {(["Body", "Mind", "People", "Purpose", "Work"] as const).map(
+                (area) => (
+                  <div
+                    key={area}
+                    className="rounded-lg border border-primary/15 bg-primary/5 py-1.5 text-center"
+                  >
+                    <p className="text-[10px] text-primary/80 font-medium">
+                      {area}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground">20%</p>
+                  </div>
+                ),
+              )}
+            </div>
           </div>
 
           <div className="bg-primary/5 flex items-center justify-between gap-3 rounded-lg border border-primary/20 px-4 py-3">
             <div className="flex items-center gap-3">
-              <ScoreRing score={METRICS_GUIDE_EXAMPLE_SCORE} size="sm" />
-              <span className={typography.sectionTitle}>Care Score</span>
+              <ScoreRing score={72} size="sm" />
+              <span className={typography.sectionTitle}>Example score</span>
             </div>
-            <span className={typography.metricValue}>{METRICS_GUIDE_EXAMPLE_SCORE}</span>
+            <span className={typography.metricValue}>72%</span>
           </div>
+
+          <p className={cn(typography.bodyMuted, "text-xs leading-relaxed")}>
+            Improvement flags and notes you write never change the score —
+            they are there to help you reflect, not to judge.
+          </p>
         </CardContent>
+      </Card>
+
+      {/* ── Care Consistency ─────────────────────────────────────────── */}
+      <Card className="gap-3 py-4">
+        <CardHeader className="px-4 pb-0">
+          <p className={typography.sectionTitle}>Care Consistency</p>
+          <p className={cn(typography.bodyMuted, "text-sm leading-relaxed")}>
+            Your streak, daily completion progress, and steps forward are
+            supporting indicators — they show <em>how consistently</em> you are
+            showing up, without changing your Self-Care Score. Use them as
+            encouragement, not measurement.
+          </p>
+        </CardHeader>
       </Card>
 
       <div className="space-y-2">

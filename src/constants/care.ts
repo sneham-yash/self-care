@@ -16,19 +16,19 @@ export const DOMAIN_SLUGS: DomainSlug[] = [
 ];
 
 export const DOMAIN_LABELS: Record<DomainSlug, string> = {
-  physical: "Physical",
-  social: "Social",
-  emotional: "Emotional",
-  spiritual: "Spiritual",
-  professional: "Professional",
+  physical: "Body",
+  social: "People",
+  emotional: "Mind",
+  spiritual: "Purpose",
+  professional: "Work",
 };
 
 export const CARE_FILTER_TABS: { value: CareFilterTab; label: string }[] = [
   { value: "all", label: "All" },
-  { value: "physical", label: "Physical" },
-  { value: "social", label: "Social" },
-  { value: "emotional", label: "Emotional" },
-  { value: "spiritual", label: "Spiritual" },
+  { value: "physical", label: "Body" },
+  { value: "social", label: "People" },
+  { value: "emotional", label: "Mind" },
+  { value: "spiritual", label: "Purpose" },
   { value: "professional", label: "Work" },
 ];
 

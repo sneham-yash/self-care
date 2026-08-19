@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { PwaRegister } from "@/components/pwa/pwa-register";
 import { ThemeProvider } from "@/components/theme-provider";
-import { APP_NAME, APP_TAGLINE, BRAND_ORANGE } from "@/constants/brand";
+import { APP_NAME, APP_TAGLINE, BRAND_PRIMARY, BRAND_PRIMARY_DARK } from "@/constants/brand";
 import { inter, sora } from "@/lib/fonts";
 
 import "./globals.css";
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: BRAND_ORANGE },
-    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" },
+    { media: "(prefers-color-scheme: light)", color: BRAND_PRIMARY },
+    { media: "(prefers-color-scheme: dark)", color: BRAND_PRIMARY_DARK },
   ],
   width: "device-width",
   initialScale: 1,

@@ -154,6 +154,30 @@ export type Database = {
         };
         Relationships: GenericRelationship[];
       };
+      user_item_flags: {
+        Row: {
+          user_id: string;
+          item_id: string;
+          wants_improvement: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          item_id: string;
+          wants_improvement?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          item_id?: string;
+          wants_improvement?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: GenericRelationship[];
+      };
       care_logs: {
         Row: {
           id: string;
@@ -272,6 +296,14 @@ export type Database = {
           completion_rate: number;
         }[];
       };
+      get_latest_item_intensities: {
+        Args: { p_as_of?: string | null };
+        Returns: { item_id: string; intensity: number; log_date: string }[];
+      };
+      set_wants_improvement: {
+        Args: { p_item_id: string; p_wants_improvement: boolean };
+        Returns: undefined;
+      };
     };
     Enums: {
       item_frequency: ItemFrequency;
@@ -288,3 +320,4 @@ export type CareItem = Database["public"]["Tables"]["care_items"]["Row"];
 export type CareLog = Database["public"]["Tables"]["care_logs"]["Row"];
 export type CareItemInsert = Database["public"]["Tables"]["care_items"]["Insert"];
 export type CategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
+export type UserItemFlag = Database["public"]["Tables"]["user_item_flags"]["Row"];

@@ -21,7 +21,7 @@ export function AppShell({
   avatarUrl,
 }: AppShellProps) {
   return (
-    <div className="bg-gradient-to-br from-primary/[0.03] via-background to-background min-h-svh overflow-x-clip pb-20 pt-14 md:pb-8 md:pl-16 md:pt-0 lg:pl-48 desktop:pl-60">
+    <div className="bg-background min-h-svh overflow-x-clip pb-20 pt-14 md:pb-8 md:pl-16 md:pt-0 lg:pl-48 desktop:pl-60">
       <AppHeader
         displayName={displayName}
         email={email}

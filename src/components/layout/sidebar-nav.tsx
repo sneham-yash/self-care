@@ -25,8 +25,8 @@ export function SidebarNav({
   const pathname = usePathname();
 
   return (
-    <nav
-      className="border-border/60 bg-card/80 fixed inset-y-0 left-0 z-50 hidden w-48 flex-col border-r shadow-sm backdrop-blur-md desktop:w-60 lg:flex"
+      <nav
+      className="border-border bg-card/90 fixed inset-y-0 left-0 z-50 hidden w-48 flex-col border-r backdrop-blur-md desktop:w-60 lg:flex shadow-[2px_0_20px_var(--shadow)]"
       aria-label="Main navigation"
     >
       <div className={cn(shellHeaderClass, "px-4 desktop:px-5")}>
