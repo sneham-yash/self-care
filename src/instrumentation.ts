@@ -4,7 +4,7 @@ export async function register() {
   }
 
   try {
-    const tls = await import("node:tls");
+    const tls = await import(/* webpackIgnore: true */ "node:tls");
     tls.setDefaultCACertificates([
       ...tls.getCACertificates(),
       ...tls.getCACertificates("system"),

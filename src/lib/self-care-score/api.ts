@@ -91,11 +91,15 @@ export async function fetchSelfCareScoreData(): Promise<SelfCareScoreData> {
     (item) => !hiddenIds.has(item.id),
   );
 
+  type IntensityRow = { item_id: string; intensity: number };
+  const currentRows = (currentIntensities ?? []) as IntensityRow[];
+  const previousRows = (previousIntensities ?? []) as IntensityRow[];
+
   const currentMap = new Map(
-    (currentIntensities ?? []).map((row) => [row.item_id, row.intensity]),
+    currentRows.map((row) => [row.item_id, row.intensity]),
   );
   const previousMap = new Map(
-    (previousIntensities ?? []).map((row) => [row.item_id, row.intensity]),
+    previousRows.map((row) => [row.item_id, row.intensity]),
   );
   const flagMap = new Map(
     (flags ?? []).map((f) => [f.item_id, f.wants_improvement]),
